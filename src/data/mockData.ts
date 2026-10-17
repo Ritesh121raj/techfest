@@ -924,7 +924,7 @@ export const MOCK_TEAM: TeamMember[] = [
     role: 'Creative Director & 3D Spatial Designer',
     division: 'Visual Identity & Metaverse Arts',
     clearance: 'LEVEL 4 // NEON',
-    avatar: '/assets/turing_city.png',
+    avatar: '/assets/aman.jpeg',
     bio: 'Pioneering sci-fi graphic design, cybernetic UI/UX, and generative shaders. Lead artist behind the Turing City and Monogrid visual identity.',
     skills: [
       { name: '3D Art & Shaders', level: 97 },
@@ -943,12 +943,12 @@ export const MOCK_TEAM: TeamMember[] = [
   },
   {
     id: 'tm-5',
-    name: 'Aman Bhardwaj',
+    name: 'Dhoom',
     callsign: 'APEX_OPERATOR',
     role: 'Head of Esports Matrix & Low-Latency Broadcast',
     division: 'Collegiate Tactical Gaming',
     clearance: 'LEVEL 4 // IMMORTAL',
-    avatar: '/assets/portal_tunnel.png',
+    avatar: '/assets/dhoom.jpeg',
     bio: 'Oversees the 16-team Valorant Protocol tournament, 360Hz player workstations, observer camera systems, and multi-platform 4K 60FPS broadcast.',
     skills: [
       { name: 'Optical Network Routing', level: 95 },
@@ -972,7 +972,7 @@ export const MOCK_TEAM: TeamMember[] = [
     role: 'Deep Tech & Academic Research Director',
     division: 'Cryo-Quantum & BCI Laboratories',
     clearance: 'LEVEL 4 // QUBIT',
-    avatar: '/assets/cyber_head.jpg',
+    avatar: '/assets/suraj.jpeg',
     bio: 'PhD candidate in quantum information science. Coordinates cloud QPU reservations, hardware sponsor mentors, and judging rubrics for deep-tech prototypes.',
     skills: [
       { name: 'Quantum Cryptography', level: 96 },
