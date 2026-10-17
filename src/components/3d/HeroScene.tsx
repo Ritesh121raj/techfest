@@ -704,14 +704,9 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
   }, [reducedMotion]);
 
   const chapter = CHAPTERS[stage];
-  const playing = stage !== 'ready';
   const barH = stage === 'ready' ? '0%' : '9%';
   const hoverSfx = () => sound.playHover();
 
-  const toggleMute = () => {
-    ctrlRef.current?.setMuted(!muted);
-    setMuted(!muted);
-  };
   const enter = () => {
     sound.playClick();
     if (onEnter) onEnter();
@@ -745,6 +740,23 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       )}
       <div className="absolute top-0 inset-x-0 z-10 bg-black pointer-events-none transition-all duration-1000" style={{ height: barH }} />
       <div className="absolute bottom-0 inset-x-0 z-10 bg-black pointer-events-none transition-all duration-1000" style={{ height: barH }} />
+
+      <div className="absolute top-5 left-5 z-30 flex items-center gap-2">
+        {stage === 'ready' && !reducedMotion && (
+          <button
+            className={chip}
+            onMouseEnter={hoverSfx}
+            type="button"
+            aria-label="Replay the cinematic intro"
+            onClick={() => {
+              sound.playClick();
+              ctrlRef.current?.replay();
+            }}
+          >
+            REPLAY INTRO
+          </button>
+        )}
+      </div>
 
       {chapter && (
         <div key={chapter.n + chapter.title} className="absolute left-6 md:left-10 bottom-[11%] z-20 pointer-events-none font-mono" style={{ animation: 'tfChapter 0.6s ease-out both' }}>
