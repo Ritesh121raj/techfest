@@ -115,7 +115,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab }) => {
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-400 to-pink-500 flex items-center justify-center font-orbitron font-black text-black text-xs">
-                Ω
+                 <img
+              src="/assets/download.jpeg"
+              alt="techFest logo"
+              className="w-full h-full rounded-[7px] object-cover group-hover:scale-110 transition-transform"
+            />
               </div>
               <span className="font-orbitron font-extrabold text-lg text-slate-100 tracking-wider">
                 techfest 2026
@@ -150,9 +154,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateTab }) => {
               INTELLIGENCE
             </div>
             <ul className="space-y-2 text-xs text-slate-400">
-              <li><button onClick={() => handleLink('home')} className="hover:text-cyan-400 transition-colors cursor-pointer">// Live Leaderboard Matrix</button></li>
-              <li><button onClick={() => handleLink('home')} className="hover:text-cyan-400 transition-colors cursor-pointer">// Festival Timeline</button></li>
-              <li><button onClick={() => handleLink('home')} className="hover:text-cyan-400 transition-colors cursor-pointer">// Keynote Operatives</button></li>
+              <li><button onClick={() => handleLink('leaderboard')} className="hover:text-cyan-400 transition-colors cursor-pointer">// Live Leaderboard Matrix</button></li>
+              <li><button onClick={() => handleLink('schedule')} className="hover:text-cyan-400 transition-colors cursor-pointer">// Festival Timeline</button></li>
               <li><a href="#faq" className="hover:text-cyan-400 transition-colors">// Code of Conduct &amp; FAQ</a></li>
             </ul>
           </div>
