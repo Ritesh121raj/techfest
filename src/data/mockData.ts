@@ -1,7 +1,7 @@
 import type { EventItem, Speaker, ScheduleItem, LeaderboardTeam, WorkshopItem, SponsorItem, TeamMember, SectorQuadrant } from '../types';
 
 export const FEST_METADATA = {
-  name: 'SYNAPSE 2026',
+  name: 'techFest 2026',
   edition: '4TH QUANTUM EDITION',
   tagline: 'A Tech Odyssey at the Edge of AGI & Cybernetics',
   startDate: '2026-10-24T09:00:00',
@@ -451,7 +451,7 @@ export const MOCK_LEADERBOARD: LeaderboardTeam[] = [
     id: 'ldr-5',
     rank: 5,
     prevRank: 4,
-    name: 'Synapse_Overclock',
+    name: 'techFest_Overclock',
     avatar: '🧠',
     university: 'ETH Zürich // D-ITET',
     category: 'hackathon',
@@ -577,12 +577,12 @@ export const MOCK_LEADERBOARD: LeaderboardTeam[] = [
 
 export const MOCK_FAQS = [
   {
-    question: 'Who is eligible to participate in SYNAPSE 2026?',
+    question: 'Who is eligible to participate in techFest 2026?',
     answer: 'Any university, college, or graduate student worldwide is welcome to participate! Both solo operatives and teams of up to 4 members are supported. High school students with coding experience may apply with parental consent.'
   },
   {
     question: 'What is the cost of registration and participation?',
-    answer: 'SYNAPSE is 100% free for all qualified participants. All accepted hackers receive compute vouchers, hardware access in designated sectors, cyber swag packs, and complimentary meals throughout the 48 hours.'
+    answer: 'techFest is 100% free for all qualified participants. All accepted hackers receive compute vouchers, hardware access in designated sectors, cyber swag packs, and complimentary meals throughout the 48 hours.'
   },
   {
     question: 'How do I generate and verify my Personalized CyberPass?',
@@ -713,14 +713,14 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     tierLabel: 'SINGULARITY TITLE PARTNER',
     logo: '🟢',
     tagline: 'Accelerating the frontier of spatial computing and accelerated computing.',
-    description: 'NVIDIA powers the global AI revolution. For SYNAPSE 2026, NVIDIA provides participants with direct access to H100 Hopper Tensor Core clusters, cuQuantum simulation libraries, and Omniverse USD digital twin kits.',
+    description: 'NVIDIA powers the global AI revolution. For techFest 2026, NVIDIA provides participants with direct access to H100 Hopper Tensor Core clusters, cuQuantum simulation libraries, and Omniverse USD digital twin kits.',
     bountyTitle: 'NVIDIA Omniverse Spatial AI & cuQuantum Challenge',
     bountyAmount: '$12,500',
     bountyDetails: 'Build an autonomous spatial AI agent or quantum circuit simulation that leverages cuQuantum or Isaac Sim. Top team receives $10,000 + Golden Ticket travel grant.',
     perks: ['Exclusive Hopper H100 Compute Hours', 'On-Site Solutions Architect Mentorship', 'Direct Interviews for AI Research Fellowships'],
     hiringRoles: ['Research Scientist — Deep Learning', 'Quantum Algorithm Engineer', 'Compiler Optimization Intern'],
     boothLocation: 'Booth S-01 // Central Holographic Plaza',
-    promoCode: 'NVIDIA-SYNAPSE-H100-BOUNTY',
+    promoCode: 'NVIDIA-techFest-H100-BOUNTY',
     badgeColor: 'border-emerald-400 text-emerald-300'
   },
   {
@@ -737,7 +737,7 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     perks: ['Claude 3.5 Sonnet & Haiku Enterprise API Keys', '1-on-1 Office Hours with Alignment Researchers', 'Priority Review for Residency Programs'],
     hiringRoles: ['Alignment Researcher', 'Systems Infrastructure Engineer', 'Member of Technical Staff'],
     boothLocation: 'Booth S-02 // Sector 01 Turing Core',
-    promoCode: 'ANTHROPIC-CLAUDE-SYNAPSE',
+    promoCode: 'ANTHROPIC-CLAUDE-techFest',
     badgeColor: 'border-pink-400 text-pink-300'
   },
   {
@@ -754,7 +754,7 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     perks: ['Research BCI Hardware kits', 'Direct Engineering AMA Session', 'Fast-Track Technical Interviews'],
     hiringRoles: ['Firmware Engineer — Implantable Silicon', 'Neuro-Signal Processing Scientist'],
     boothLocation: 'Booth A-01 // Sector 05 Synaptic Pavilion',
-    promoCode: 'NEURALINK-SYNAPSE-2026',
+    promoCode: 'NEURALINK-techFest-2026',
     badgeColor: 'border-purple-400 text-purple-300'
   },
   {
@@ -771,7 +771,7 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     perks: ['Free Pro Tier Plan for 1 Year for All Hackers', 'Custom Supabase Cyber Swag Packs', 'Founders Circle Mentorship'],
     hiringRoles: ['Fullstack Rust/TypeScript Engineer', 'Database Kernel Hacker'],
     boothLocation: 'Booth A-02 // Developer Pod 03',
-    promoCode: 'SUPABASE-SYNAPSE-PRO',
+    promoCode: 'SUPABASE-techFest-PRO',
     badgeColor: 'border-cyan-400 text-cyan-300'
   },
   {
@@ -788,7 +788,7 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     perks: ['Unlimited Workers AI Inference Credits', 'Global Network Pass', 'Dev Tooling Grants'],
     hiringRoles: ['Systems Engineer (Rust/C++)', 'Developer Relations Advocate'],
     boothLocation: 'Booth A-03 // Network Operations Hub',
-    promoCode: 'CLOUDFLARE-EDGE-SYNAPSE',
+    promoCode: 'CLOUDFLARE-EDGE-techFest',
     badgeColor: 'border-amber-400 text-amber-300'
   },
   {
@@ -839,7 +839,7 @@ export const MOCK_SPONSORS: SponsorItem[] = [
     perks: ['Exclusive 30% Off Voucher for All Registered Operatives'],
     hiringRoles: ['Mechanical Hardware Designer', 'Firmware Engineer'],
     boothLocation: 'Booth H-01 // Terminal Nexus Stage',
-    promoCode: 'KEYCHRON-SYNAPSE-30',
+    promoCode: 'KEYCHRON-techFest-30',
     badgeColor: 'border-slate-400 text-slate-300'
   }
 ];
@@ -861,7 +861,7 @@ export const MOCK_TEAM: TeamMember[] = [
       { name: 'Crisis Response', level: 90 }
     ],
     achievements: [
-      'Grew SYNAPSE from 200 to 1,200+ global participants',
+      'Grew techFest from 200 to 1,200+ global participants',
       'Secured $75,000 cash bounty escrow with NVIDIA & Anthropic',
       'Orchestrated multi-campus fiber optical WAN for zero-latency arena'
     ],
@@ -968,7 +968,7 @@ export const MOCK_TEAM: TeamMember[] = [
   {
     id: 'tm-6',
     name: 'Suraj',
-    callsign: 'QUANTUM_SYNAPSE',
+    callsign: 'QUANTUM_techFest',
     role: 'Deep Tech & Academic Research Director',
     division: 'Cryo-Quantum & BCI Laboratories',
     clearance: 'LEVEL 4 // QUBIT',
@@ -981,7 +981,7 @@ export const MOCK_TEAM: TeamMember[] = [
       { name: 'Ethics in AGI', level: 90 }
     ],
     achievements: [
-      'Authored the official SYNAPSE 2026 problem bank',
+      'Authored the official techFest 2026 problem bank',
       'Secured 12 academic mentors from CERN, MIT, and Oxford',
       'Curated the $25,000 publication and incubation grant pool'
     ],
@@ -1071,7 +1071,7 @@ export const MOCK_TIMELINE = [
   },
   {
     year: '2023',
-    edition: 'SYNAPSE II',
+    edition: 'techFest II',
     tagline: 'Autonomous Steel',
     hackers: '550 Operatives',
     breakthrough: 'Inauguration of the Steel Coliseum with autonomous combat bots and live biometric telemetry.',
@@ -1079,7 +1079,7 @@ export const MOCK_TIMELINE = [
   },
   {
     year: '2024',
-    edition: 'SYNAPSE III',
+    edition: 'techFest III',
     tagline: 'The Edge of AGI',
     hackers: '850 Operatives',
     breakthrough: 'First LLM multi-agent autonomous competition judged by Silicon Valley frontier AI labs.',

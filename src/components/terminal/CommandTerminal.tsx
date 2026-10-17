@@ -31,7 +31,7 @@ export const CommandTerminal: React.FC<CommandTerminalProps> = ({
   const { showToast } = useToast();
   const [inputVal, setInputVal] = useState('');
   const [logs, setLogs] = useState<CommandLog[]>([
-    { id: '1', type: 'system', text: '/// SYNAPSE OS v4.2.0-STABLE INITIALIZED' },
+    { id: '1', type: 'system', text: '/// techFest OS v4.2.0-STABLE INITIALIZED' },
     { id: '2', type: 'system', text: 'Type "help" to display operational directives or click quick commands below.' }
   ]);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -188,7 +188,7 @@ export const CommandTerminal: React.FC<CommandTerminalProps> = ({
           <div className="flex items-center justify-between px-4 py-3 bg-[#090e24] border-b border-cyan-500/30">
             <div className="flex items-center gap-2">
               <TerminalIcon className="w-4 h-4 text-cyan-400" />
-              <span className="font-bold text-slate-200">SYNAPSE TERMINAL COMMAND PROMPT</span>
+              <span className="font-bold text-slate-200">techFest TERMINAL COMMAND PROMPT</span>
             </div>
 
             <div className="flex items-center gap-2">

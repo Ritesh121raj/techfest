@@ -18,7 +18,7 @@ export const SpeakerProfiles: React.FC = () => {
             <span>/// 06 — QUANTUM KEYNOTE OPERATIVES</span>
           </div>
           <h2 className="font-orbitron text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase">
-            SYNAPSE <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">VISIONARIES</span>
+            techFest <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">VISIONARIES</span>
           </h2>
           <p className="mt-3 text-slate-400 font-space text-sm sm:text-base">
             Frontier researchers in autonomous AGI agents, cryo-quantum processors, combat robotics, and neuro-spatial interfaces.

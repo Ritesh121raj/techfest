@@ -14,7 +14,7 @@ export const WorkshopsPage: React.FC = () => {
   const [workshops, setWorkshops] = useState<WorkshopItem[]>(MOCK_WORKSHOPS);
   const [reservedWorkshops, setReservedWorkshops] = useState<string[]>(() => {
     try {
-      const stored = localStorage.getItem('synapse_reserved_workshops');
+      const stored = localStorage.getItem('techFest_reserved_workshops');
       return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
@@ -31,7 +31,7 @@ export const WorkshopsPage: React.FC = () => {
       sound.playClick();
       const updated = reservedWorkshops.filter(id => id !== workshop.id);
       setReservedWorkshops(updated);
-      localStorage.setItem('synapse_reserved_workshops', JSON.stringify(updated));
+      localStorage.setItem('techFest_reserved_workshops', JSON.stringify(updated));
 
       // Increase seats remaining
       setWorkshops(prev =>
@@ -62,7 +62,7 @@ export const WorkshopsPage: React.FC = () => {
 
     const updated = [...reservedWorkshops, workshop.id];
     setReservedWorkshops(updated);
-    localStorage.setItem('synapse_reserved_workshops', JSON.stringify(updated));
+    localStorage.setItem('techFest_reserved_workshops', JSON.stringify(updated));
 
     // Decrease seats remaining in real-time
     setWorkshops(prev =>

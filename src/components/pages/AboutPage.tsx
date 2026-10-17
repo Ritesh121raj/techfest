@@ -200,7 +200,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onRegister, onExploreEvent
         <div className="text-center max-w-xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-cyan-400 font-mono text-xs tracking-wider uppercase mb-1">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>CHRONICLES OF SYNAPSE</span>
+            <span>CHRONICLES OF techfest</span>
           </div>
           <h2 className="font-orbitron text-3xl font-extrabold uppercase text-slate-100">
             THE 4-YEAR <span className="bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-transparent">EVOLUTION</span>
@@ -263,7 +263,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onRegister, onExploreEvent
                 <span>SIGNAL DECRYPTED: WELCOME OPERATIVE</span>
               </div>
               <p className="text-slate-300">
-                &ldquo;We did not build SYNAPSE to replicate traditional college expos. We built an autonomous sandbox where undergraduates can command quantum circuits, deploy multi-agent swarms, and redefine collegiate robotics.&rdquo;
+                &ldquo;We did not build techfest to replicate traditional college expos. We built an autonomous sandbox where undergraduates can command quantum circuits, deploy multi-agent swarms, and redefine collegiate robotics.&rdquo;
               </p>
               <div className="text-[10px] text-slate-500 pt-1">
                 — Aiden Vance &amp; Seraphina Lin, Consortium Founders

@@ -3,10 +3,10 @@ import type { GeneratedPass } from '../types';
 import { sound } from '../utils/audio';
 
 const STORAGE_KEYS = {
-  BOOKMARKS: 'synapse_fest_bookmarks_v1',
-  DIGITAL_PASS: 'synapse_fest_pass_v1',
-  SOUND_MUTED: 'synapse_fest_sound_muted_v1',
-  SCANLINES: 'synapse_fest_scanlines_v1',
+  BOOKMARKS: 'techFest_fest_bookmarks_v1',
+  DIGITAL_PASS: 'techFest_fest_pass_v1',
+  SOUND_MUTED: 'techFest_fest_sound_muted_v1',
+  SCANLINES: 'techFest_fest_scanlines_v1',
 };
 
 export function useStorage() {
