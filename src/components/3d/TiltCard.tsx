@@ -1,4 +1,3 @@
-
 import React, {
   useRef,
   useState,
@@ -16,6 +15,7 @@ interface TiltCardProps {
   disabled?: boolean;
   onClick?: () => void;
   showScanBeam?: boolean;
+  contentInteractions?: boolean;
 }
 
 const THEMES = {
@@ -53,6 +53,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   disabled = false,
   onClick,
   showScanBeam = true,
+  contentInteractions = false,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const scanTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -100,7 +101,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       clearTimeout(scanTimer.current);
     }
 
-    // Restart the animation on repeated interactions.
+    
     requestAnimationFrame(() => {
       setIsScanning(true);
 
@@ -128,17 +129,19 @@ export const TiltCard: React.FC<TiltCardProps> = ({
     setPointer({ x: 50, y: 50 });
   }, []);
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((event?: React.MouseEvent<HTMLDivElement>) => {
     if (!clickable) return;
+    if (event && contentInteractions && (event.target as HTMLElement).closest('button, a, input, select, textarea')) return;
 
     sound.playClick();
     startScan();
     onClick?.();
-  }, [clickable, onClick, startScan]);
+  }, [clickable, contentInteractions, onClick, startScan]);
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
+    if (contentInteractions && e.target !== e.currentTarget) return;
     if (!clickable || (e.key !== "Enter" && e.key !== " ")) {
       return;
     }
@@ -163,7 +166,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      role={clickable ? "button" : undefined}
+      role={clickable ? (contentInteractions ? "group" : "button") : undefined}
       tabIndex={clickable ? 0 : undefined}
       aria-disabled={clickable ? disabled : undefined}
       data-interactive="true"
@@ -194,7 +197,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
           : "0 12px 32px rgba(0,0,0,0.18)",
       } as React.CSSProperties}
     >
-      {/* Animated energy border */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -inset-px z-30 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -210,7 +213,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Cursor-following holographic light */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -219,7 +222,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Prismatic holographic film */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 opacity-0 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100"
@@ -239,7 +242,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Specular reflection */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -248,7 +251,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Subtle futuristic grid */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.045]"
@@ -263,7 +266,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Laser sweep */}
+      {}
       {isScanning && (
         <div
           key={`${id}-${isScanning}`}
@@ -277,7 +280,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         />
       )}
 
-      {/* HUD corners */}
+      {}
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute left-0 top-0 z-30 h-5 w-5 border-l-2 border-t-2 ${theme.text.replace("text-", "border-")} transition-all duration-300 group-hover:h-8 group-hover:w-8`}
@@ -295,7 +298,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         className={`pointer-events-none absolute bottom-0 right-0 z-30 h-5 w-5 border-b-2 border-r-2 ${theme.text.replace("text-", "border-")} transition-all duration-300 group-hover:h-8 group-hover:w-8`}
       />
 
-      {/* Telemetry indicator */}
+      {}
       <div className="pointer-events-none absolute right-4 top-4 z-30 flex items-center gap-2">
         <span
           className={`h-1.5 w-1.5 rounded-full ${theme.led} ${
@@ -309,7 +312,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         </span>
       </div>
 
-      {/* Bottom telemetry line */}
+      {}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-4 bottom-0 z-20 h-px origin-center scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
@@ -319,7 +322,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
         }}
       />
 
-      {/* Elevated card content */}
+      {}
       <div
         className="relative z-10 h-full w-full"
         style={{ transform: "translateZ(22px)" }}
