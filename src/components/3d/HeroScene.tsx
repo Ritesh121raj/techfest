@@ -11,14 +11,7 @@ import {
 } from './heroScenekit';
 import type { TitleVoxels } from './heroScenekit';
 import { createBattle } from './heroBattle';
-
-/* ════════════════════════════════════════════════════════════════════
-   TECHFEST 2026 — CINEMATIC HERO (autoplays on load, starts muted)
-   Everything on screen is a pure function of one clock `t` (seconds).
-   ════════════════════════════════════════════════════════════════════ */
-
 const V3 = THREE.Vector3;
-
 const T = {
   alert: 2.2,
   intercept: 3.5,
@@ -26,19 +19,16 @@ const T = {
   reveal: 10.9,
   end: 14.8,
 } as const;
-
 const T_JET0 = 3.3;
 const T_JET1 = 9.6;
 const T_HIT = 8.15;
 const T_CRASH = 9.95;
 const DRONE_DEATH = [5.3, 6.15, 6.9, 7.6];
-
 const CRASH = new V3(5, 1.0, -36);
 const CRASH_LOOK = new V3(5, 4, -36);
 const TITLE_POS = new V3(0, 4.7, -13);
 const TITLE_LOOK = new V3(0, 4.3, -13);
 const TITLE_WIDTH = 18;
-// all fires stay in front of the backdrop plane (z = -40)
 const DEBRIS_FIRES = [
   new V3(-9, 0.2, -30), new V3(14, 0.2, -26), new V3(-4, 0.2, -34),
   new V3(11, 0.2, -37), new V3(-14, 0.2, -18),
@@ -47,8 +37,6 @@ const DEBRIS_FIRES = [
 type Stage = 'contact' | 'alert' | 'intercept' | 'impact' | 'reveal' | 'ready';
 const stageAt = (t: number): Stage =>
   t < T.alert ? 'contact' : t < T.intercept ? 'alert' : t < T.impact ? 'intercept' : t < T.reveal ? 'impact' : t < T.end ? 'reveal' : 'ready';
-
-/* ── scripted flight paths ── */
 
 const leadCurve = new THREE.CatmullRomCurve3(
   [
@@ -93,15 +81,10 @@ const dronePos = (k: number, t: number, out: THREE.Vector3) => {
     -84 + smooth(0, 3, s) * 34 + Math.cos(s * 0.9 + ph) * 8
   );
 };
-
-/* ════════════════════════════════════════════════════════════════════ */
-
 interface HeroSceneProps {
   sceneMode?: 'core' | 'orb' | 'portal';
   reducedMotion?: boolean;
-  /** fires once the title is revealed and the hero goes idle */
   onIntroComplete?: () => void;
-  /** access-pass button; defaults to scrolling one screen down */
   onEnter?: () => void;
   onPhaseChange?: (phase: HeroSequencePhase) => void;
   onSkipReady?: (skip: () => void) => void;
@@ -136,7 +119,7 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
   skipRef.current = onSkipReady;
 
   const [stage, setStage] = useState<Stage>(reducedMotion ? 'ready' : 'contact');
-  const [muted, setMuted] = useState(true); // browsers block autoplay audio, so we start muted
+  const [muted, setMuted] = useState(true); 
   const [fps, setFps] = useState(60);
 
   useEffect(() => {
@@ -148,8 +131,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     const getH = () => Math.max(1, container.clientHeight);
     const pr = Math.max(1, Math.min(window.devicePixelRatio || 1, lite ? 1.5 : 2));
     void document.fonts?.load('900 100px "Orbitron"').catch(() => undefined);
-
-    /* ── renderer / post (MSAA + hi-dpi so edges and title stay sharp) ── */
     const scene = new THREE.Scene();
     const fogColor = new THREE.Color(0x0d0a22);
     scene.fog = new THREE.FogExp2(fogColor, 0.008);
@@ -173,8 +154,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     const bloom = new UnrealBloomPass(new THREE.Vector2(getW(), getH()), 0.5, 0.4, 0.4);
     composer.addPass(bloom);
     composer.addPass(new OutputPass());
-
-    /* ── world ── */
     scene.add(createSky());
     scene.add(createStars(lite ? 700 : 1400));
     scene.add(createTerrain(lite ? 90 : 150));
@@ -185,8 +164,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     gm.transparent = true;
     gm.opacity = 0.13;
     scene.add(grid);
-
-    /* ── lights ── */
     scene.add(new THREE.HemisphereLight(0x3a4a9a, 0x14081f, 0.9));
     const moon = new THREE.DirectionalLight(0x7fa8ff, 1.1);
     moon.position.set(-30, 40, 20);
@@ -203,7 +180,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     const cursorLight = new THREE.PointLight(0xffffff, 0, 16, 2);
     scene.add(motherLight, searchSpot, searchSpot.target, fireLight, boomLight, rimCyan, rimMagenta, cursorLight);
 
-    /* ── searchlight beam ── */
     const beamGeo = new THREE.CylinderGeometry(0.2, 1, 1, 32, 1, true).translate(0, -0.5, 0);
     const beam = new THREE.Mesh(
       beamGeo,
@@ -214,7 +190,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     );
     scene.add(beam);
 
-    /* ── actors ── */
     const mother = createUFO();
     mother.scale.setScalar(4.2);
     mother.visible = false;
@@ -234,21 +209,15 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       scene.add(j);
       return j;
     });
-
-    /* ── particles ── */
     const glow = new ParticlePool(lite ? 2800 : 5500, true);
     const smoke = new ParticlePool(lite ? 800 : 1600, false);
     scene.add(glow.points, smoke.points);
-
-    /* ── finale: crash plate → mech battle plate + endless firefight ── */
     const battle = createBattle(scene, glow, {
       showCrash: T.reveal,
       showMechs: T.reveal + 3,
       still: reducedMotion,
       aniso: renderer.capabilities.getMaxAnisotropy(),
     });
-
-    /* ── shockwave + energy pillar (reveal) ── */
     const ringMat = (c: THREE.Color) =>
       new THREE.MeshBasicMaterial({
         color: c, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
@@ -264,8 +233,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     );
     pillar.position.set(CRASH.x, 0, CRASH.z);
     scene.add(ringA, ringB, pillar);
-
-    /* ── title (built lazily so a late-loading webfont is picked up) ── */
     const titleGroup = new THREE.Group();
     titleGroup.position.copy(TITLE_POS);
     scene.add(titleGroup);
@@ -273,12 +240,10 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     const ensureTitle = () => {
       if (title) return title;
       const origin = CRASH.clone().sub(TITLE_POS);
-      title = buildTitle(TITLE_WIDTH, lite ? 6 : 4, origin, makeRng(77)); // smaller step = crisper letters
+      title = buildTitle(TITLE_WIDTH, lite ? 6 : 4, origin, makeRng(77)); 
       titleGroup.add(title.mesh);
       return title;
     };
-
-    /* ── director state ── */
     const audio = new CinematicAudio();
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     const cursorWorld = new V3(0, TITLE_POS.y, TITLE_POS.z + 2.5);
@@ -294,8 +259,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     let stageRef: Stage | '' = '';
     let titleDist = 19;
     let fov = 50;
-
-    /* ── effects ── */
     const explode = (p: THREE.Vector3, size: number) => {
       const q = lite ? 0.6 : 1;
       const n = Math.floor(46 * size * q);
@@ -331,8 +294,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           3 + r() * 3, 0.14, 0.05, 1.9, 0.7, 0.2, 1, 0.4);
       }
     };
-
-    /* ── scripted bolts + missiles ── */
     interface Bolt { t0: number; dur: number; a: THREE.Vector3; b: THREE.Vector3; missile: boolean; mesh: THREE.Mesh }
     const bolts: Bolt[] = [];
     const laserGeo = new THREE.BoxGeometry(0.07, 0.07, 1.8);
@@ -347,8 +308,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       scene.add(mesh);
       bolts.push({ t0, dur, a: a.clone(), b: b.clone(), missile, mesh });
     };
-
-    /* ── the cue sheet ── */
     const cues: { t: number; fn: () => void }[] = [];
     const cue = (at: number, fn: () => void) => cues.push({ t: at, fn });
     const cut = () => { flash = Math.max(flash, 0.28); shake = Math.max(shake, 0.18); audio.whoosh(); };
@@ -407,7 +366,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     cue(T.reveal, () => { audio.duck(1, 0.05); audio.reveal(); flash = 0.9; shake = 0.35; });
     cues.sort((a, b) => a.t - b.t);
 
-    /* ── input ── */
     const onMove = (e: MouseEvent) => {
       const r = container.getBoundingClientRect();
       mouse.tx = ((e.clientX - r.left) / r.width) * 2 - 1;
@@ -437,8 +395,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
     const ro = new ResizeObserver(resize);
     ro.observe(container);
     resize();
-
-    /* ── public controls ── */
     const resetWorld = () => {
       glow.clear();
       smoke.clear();
@@ -460,9 +416,11 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
         resetWorld();
         audio.duck(1, 0.05);
         t = 0; nextCue = 0; started = true; running = true; stageRef = '';
+        setStage('contact');
+        setFps(60);
       },
       setMuted(m) {
-        if (!m) audio.init(); // needs a user click, which the Sound button provides
+        if (!m) audio.init(); 
         audio.setMuted(m);
       },
     };
@@ -474,12 +432,9 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       phaseRef.current?.('complete');
       completeRef.current?.();
     } else {
-      // autoplay, muted
       audio.setMuted(true);
       started = true; running = true; t = 0; nextCue = 0; stageRef = '';
     }
-
-    /* ── temp vectors ── */
     const camPos = new V3(), camLook = new V3();
     const a = new V3(), b = new V3(), c = new V3(), d = new V3();
     const CAM_D = new V3(-17, 2, 22);
@@ -524,7 +479,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       mouse.x += (mouse.tx - mouse.x) * 0.05;
       mouse.y += (mouse.ty - mouse.y) * 0.05;
 
-      /* mothership + searchlight (3D wreck hands over to the crash plate at the reveal) */
       const showMother = t > 0.3 && t < T.reveal;
       mother.visible = showMother;
       mothPos(t, a);
@@ -551,7 +505,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       (beam.material as THREE.MeshBasicMaterial).opacity = 0.16 * beamK;
       searchSpot.intensity = 6000 * beamK;
 
-      /* alien drones */
       drones.forEach((u, i) => {
         const alive = t > 3.0 && t < DRONE_DEATH[i];
         u.visible = alive;
@@ -560,8 +513,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
         u.rotation.z = Math.sin((t - 2.6) * 1.6 + i * 2.5) * 0.4;
         (u.userData.rim as THREE.Object3D).rotation.y += dt * 4;
       });
-
-      /* fighter jets */
       const flyby = t > T.reveal + 1.2;
       jets.forEach((j, i) => {
         let on = false;
@@ -590,8 +541,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           smoke.emit(exhaust.x, exhaust.y, exhaust.z, 0, 0, 0, 1.4, 0.3, 1.4, 0.35, 0.38, 0.5, 0.22);
         }
       });
-
-      /* bolts & missiles */
       for (const bo of bolts) {
         const u = (t - bo.t0) / bo.dur;
         const on = u >= 0 && u <= 1;
@@ -604,8 +553,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           smoke.emit(p.x, p.y, p.z, 0, 0, 0, 1.1, 0.35, 1.2, 0.4, 0.4, 0.45, 0.25);
         }
       }
-
-      /* burning mothership + post-crash fires */
       if (t > T_HIT && t < T_CRASH) {
         mothPos(t, c);
         for (let i = 0; i < 3; i++) {
@@ -621,8 +568,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       fireLight.intensity = t > T_CRASH ? (700 + Math.sin(t * 23) * 120 + Math.random() * 150) * smooth(T_CRASH, T_CRASH + 0.6, t) : 0;
       boom *= Math.exp(-dt * 5);
       boomLight.intensity = boom * 2500;
-
-      /* reveal set-pieces */
       const rk = t - T.reveal;
       const ring = (m: THREE.Mesh, delay: number) => {
         const q = clamp01((rk - delay) / 2.2);
@@ -636,14 +581,10 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       pillar.visible = pk > 0 && pk < 1;
       pillar.scale.set(1 + pk * 2, 1, 1 + pk * 2);
       (pillar.material as THREE.MeshBasicMaterial).opacity = smooth(0, 0.1, pk) * (1 - smooth(0.3, 1, pk)) * 0.8;
-
-      /* backdrop plates + endless firefight; rim lights flicker with each shot */
       battle.update(t, dt);
       const revealK = smooth(T.reveal, T.reveal + 1.5, t);
       rimCyan.intensity = 260 * revealK + battle.kick.cyan * 500;
       rimMagenta.intensity = 260 * revealK + battle.kick.red * 500;
-
-      /* title assembly + idle life */
       if (t >= T.reveal - 0.6) ensureTitle();
       if (title) {
         const ta = t - (T.reveal + 0.5);
@@ -663,8 +604,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       } else {
         cursorLight.intensity = 0;
       }
-
-      /* ── camera ── */
       let baseShake = 0;
       if (t < T.intercept) {
         const q = t / T.intercept;
@@ -730,8 +669,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       smoke.setScale(pxScale);
       glow.update(dt);
       smoke.update(dt);
-
-      /* DOM overlays */
       flash *= Math.exp(-dt * 5);
       bloom.strength = 0.5 + Math.min(1, flash) * 0.9 + Math.min(1, boom * 0.2);
       if (flashRef.current) flashRef.current.style.opacity = String(Math.min(1, flash));
@@ -743,8 +680,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       composer.render();
     };
     animate();
-
-    /* ── cleanup ── */
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('mousemove', onMove);
@@ -767,8 +702,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
       if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
     };
   }, [reducedMotion]);
-
-  /* ════════════════════════ HUD / UI ════════════════════════ */
 
   const chapter = CHAPTERS[stage];
   const playing = stage !== 'ready';
@@ -794,19 +727,13 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
         @keyframes tfChapter { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
         @keyframes tfBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
       `}</style>
-
-      {/* WebGL canvas */}
       <div
         ref={mountRef}
         className="absolute inset-0 z-0 cursor-crosshair overflow-hidden pointer-events-auto"
         title={stage === 'ready' ? 'Move the mouse to light up the title — click to pulse' : undefined}
       />
-
-      {/* impact flash + blackout */}
       <div ref={flashRef} className="absolute inset-0 z-10 bg-white opacity-0 pointer-events-none mix-blend-screen" />
       <div ref={blackRef} className="absolute inset-0 z-10 bg-black opacity-0 pointer-events-none" />
-
-      {/* red alert vignette */}
       {stage === 'alert' && (
         <div
           className="absolute inset-0 z-10 pointer-events-none"
@@ -816,12 +743,9 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           }}
         />
       )}
-
-      {/* letterbox bars */}
       <div className="absolute top-0 inset-x-0 z-10 bg-black pointer-events-none transition-all duration-1000" style={{ height: barH }} />
       <div className="absolute bottom-0 inset-x-0 z-10 bg-black pointer-events-none transition-all duration-1000" style={{ height: barH }} />
 
-      {/* chapter caption */}
       {chapter && (
         <div key={chapter.n + chapter.title} className="absolute left-6 md:left-10 bottom-[11%] z-20 pointer-events-none font-mono" style={{ animation: 'tfChapter 0.6s ease-out both' }}>
           <p className="text-[11px] text-cyan-300/80 mb-1">Chapter {chapter.n}</p>
@@ -829,8 +753,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           <p className="text-xs md:text-sm text-slate-300/80 mt-1">{chapter.sub}</p>
         </div>
       )}
-
-      {/* radar */}
       {(stage === 'contact' || stage === 'alert') && (
         <div className="absolute right-6 md:right-10 bottom-[11%] z-20 pointer-events-none">
           <div className={`relative w-32 h-32 md:w-44 md:h-44 rounded-full border overflow-hidden backdrop-blur-sm ${stage === 'alert' ? 'border-red-500/70 bg-red-950/30' : 'border-emerald-400/50 bg-emerald-950/30'}`}>
@@ -849,8 +771,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
           </div>
         </div>
       )}
-
-      {/* targeting reticle during the dogfight */}
       {stage === 'intercept' && (
         <svg className="absolute z-20 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 opacity-60" viewBox="0 0 100 100" fill="none" stroke="#00f0ff" strokeWidth="1.5">
           <circle cx="50" cy="50" r="30" />
@@ -859,33 +779,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
         </svg>
       )}
 
-      {/* top-right controls */}
-      <div className="absolute top-5 right-5 z-30 flex items-center gap-2">
-        {playing && !reducedMotion && (
-          <button className={chip} onMouseEnter={hoverSfx} onClick={() => ctrlRef.current?.skip()}>
-            Skip intro
-          </button>
-        )}
-        {stage === 'ready' && !reducedMotion && (
-          <button
-            className={chip}
-            onMouseEnter={hoverSfx}
-            onClick={() => {
-              sound.playClick();
-              ctrlRef.current?.replay();
-            }}
-          >
-            Replay intro
-          </button>
-        )}
-        {!reducedMotion && (
-          <button className={chip} onMouseEnter={hoverSfx} onClick={toggleMute} aria-pressed={!muted}>
-            {muted ? 'Sound off' : 'Sound on'}
-          </button>
-        )}
-      </div>
-
-      {/* access pass */}
       {stage === 'ready' && (
         <div className="absolute bottom-10 inset-x-0 z-30 flex flex-col items-center gap-2 pointer-events-none">
           <button
@@ -899,7 +792,6 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
         </div>
       )}
 
-      {/* live render badge */}
       {stage === 'ready' && (
         <div className="absolute bottom-6 left-6 z-20 hidden md:flex items-center gap-3 bg-[#080d21]/70 backdrop-blur-md border border-slate-700/50 rounded-lg px-3 py-2 text-[11px] font-mono text-slate-300 pointer-events-none">
           <span className="flex items-center gap-1.5">
