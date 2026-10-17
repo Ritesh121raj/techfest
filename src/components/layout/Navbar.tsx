@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <div className="relative w-9 h-9 rounded-lg bg-linear-to-tr from-cyan-500 via-purple-600 to-pink-500 p-[1.5px] shadow-[0_0_15px_rgba(6,182,212,0.5)]">
             <img
-              src="../../public/assets/download.jpeg"
+              src="/assets/download.jpeg"
               alt="techFest logo"
               className="w-full h-full rounded-[7px] object-cover group-hover:scale-110 transition-transform"
             />
