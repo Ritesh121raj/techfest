@@ -118,8 +118,7 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ sceneMode = 'core', reduce
   const skipRef = useRef(onSkipReady);
   skipRef.current = onSkipReady;
 
-  const [stage, setStage] = useState<Stage>(reducedMotion ? 'ready' : 'contact');
-  const [muted, setMuted] = useState(true); 
+  const [stage, setStage] = useState<Stage>(reducedMotion ? 'ready' : 'contact'); 
   const [fps, setFps] = useState(60);
 
   useEffect(() => {
